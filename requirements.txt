@@ -1,0 +1,4 @@
+python-dotenv==1.0.0
+llama-index
+llama-hub==0.0.60
+unstructured[pdf]
