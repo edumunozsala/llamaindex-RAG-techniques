@@ -1,5 +1,7 @@
 # Retrieval Augmented Generation Techniques in Llamaindex
- This repository collects multiple notebooks and .py files with techniques and solutions to RAG problems. Some simple solutions to more advanced ones to approach the retrieval, augmentation and generation of answers or information about data/documents provided. 
+ This repository collects multiple notebooks and .py files with techniques and solutions to RAG problems. Some simple solutions to more advanced ones to approach the retrieval, augmentation and generation of answers or information about data/documents provided.
+
+ #### This repository is still in progress. 
 
  ### Dense X Retrieval
 
@@ -27,8 +29,11 @@ The retrieved documents will be reranked according to the `Reciprocal Rerank Fus
 
 Hybrid or fusion search usually provides better retrieval results as two complementary search algorithms are combined, taking into account both semantic similarity and keyword matching between the query and the stored documents.
 
+### Sub Query RetrieverEngine for RAG 
+Query transformations are a family of techniques using an LLM as a reasoning engine to modify user input in order to improve retrieval quality.
 
-#### This repository is still in progress.
+In this notebook, we showcase how to use a sub question query engine to tackle the problem of answering a complex query using multiple data sources.
+It first breaks down the complex query into sub questions for each relevant data source, then gather all the intermediate reponses and synthesizes a final response.
 
 # Content
 
@@ -36,6 +41,8 @@ Hybrid or fusion search usually provides better retrieval results as two complem
 
 
 - reciprocal-rerank-fusion: a notebook where we build a simple RAG chain using an Hybrid Fusion Retriever with multiple queries and the Reciprocal Rerank Fusion, based on the [paper](https://plg.uwaterloo.ca/~gvcormac/cormacksigir09-rrf.pdf). 
+
+- multi-sub-queries-engine: in this notebook we show you how to use subqueries to improve RAG application.
 
 # License
 
