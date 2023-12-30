@@ -35,6 +35,14 @@ Query transformations are a family of techniques using an LLM as a reasoning eng
 In this notebook, we showcase how to use a sub question query engine to tackle the problem of answering a complex query using multiple data sources.
 It first breaks down the complex query into sub questions for each relevant data source, then gather all the intermediate reponses and synthesizes a final response.
 
+### Sentence Window Retrieval
+
+In this technique, we use the `SentenceWindowNodeParser` to parse documents into single sentences per node. Each node also contains a “window” with the sentences on either side of the node sentence. During retrieval, the similarity search is done over ther sentences then before passing the retrieved sentences to the LLM, the single sentences are replaced with a window containing the surrounding sentences using the `MetadataReplacementNodePostProcessor`.
+
+This is most useful for large documents/indexes, as it helps to retrieve more fine-grained details. By default, the sentence window is 5 sentences on either side of the original sentence.
+
+In this case, chunk size settings are not used, in favor of following the window settings.
+
 # Content
 
 - dense-x-retrieval: a notebook with the code from Llamaindex to build a propositional retrieval designed in the paper: ["Dense X Retrieval: What Retrieval Granularity Should We Use?"](https://arxiv.org/abs/2312.06648) by Tong Chen, Hongwei Wang, Sihao Chen, Wenhao Yu, Kaixin Ma, Xinran Zhao, Hongming Zhang, and Dong Yu from the University of Washington, Tencent AI Lab, University of Pennsylvania, and Carnegie Mellon University. Llamaindex provides a LlamaPack to apply this technique. The original code in this [link](https://github.com/run-llama/llama-hub/tree/main/llama_hub/llama_packs/dense_x_retrieval)
@@ -43,6 +51,8 @@ It first breaks down the complex query into sub questions for each relevant data
 - reciprocal-rerank-fusion: a notebook where we build a simple RAG chain using an Hybrid Fusion Retriever with multiple queries and the Reciprocal Rerank Fusion, based on the [paper](https://plg.uwaterloo.ca/~gvcormac/cormacksigir09-rrf.pdf). 
 
 - multi-sub-queries-engine: in this notebook we show you how to use subqueries to improve RAG application.
+
+- sentence-window-retrieval: a sample notebook applying the sentence window retrieval and a reranker in the query engine.
 
 # License
 

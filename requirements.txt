@@ -3,3 +3,5 @@ llama-index
 llama-hub==0.0.60
 rank_bm25==0.2.2
 unstructured[pdf]
+sentence-transformers==2.2.2
+torch==2.1.2
