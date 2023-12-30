@@ -156,4 +156,5 @@ data
 # Output data
 output
 # DB persist dir
-"./sentence_index"
+sentence_index
+merging_index

@@ -43,6 +43,15 @@ This is most useful for large documents/indexes, as it helps to retrieve more fi
 
 In this case, chunk size settings are not used, in favor of following the window settings.
 
+### Auto Merging Retrieval
+The idea here is pretty much similar to Sentence Window Retriever — to search for more granular pieces of information and then to extend the context window before feeding said context to an LLM for reasoning. Documents are split into smaller child chunks referring to larger parent chunks.
+Fetch smaller chunks during retrieval first, then if more than n chunks in top k retrieved chunks are linked to the same parent node (larger chunk), we replace the context fed to the LLM by this parent node — works like auto merging a few retrieved chunks into a larger parent chunk, hence the method name.
+
+In this notebook, we showcase our `AutoMergingRetriever`, which looks at a set of leaf nodes and recursively “merges” subsets of leaf nodes that reference a parent node beyond a given threshold. This allows us to consolidate potentially disparate, smaller contexts into a larger context that might help synthesis.
+
+You can define this hierarchy yourself over a set of documents, or you can make use of our brand-new text parser: a `HierarchicalNodeParser` that takes in a candidate set of documents and outputs an entire hierarchy of nodes, from “coarse-to-fine”.
+
+
 # Content
 
 - dense-x-retrieval: a notebook with the code from Llamaindex to build a propositional retrieval designed in the paper: ["Dense X Retrieval: What Retrieval Granularity Should We Use?"](https://arxiv.org/abs/2312.06648) by Tong Chen, Hongwei Wang, Sihao Chen, Wenhao Yu, Kaixin Ma, Xinran Zhao, Hongming Zhang, and Dong Yu from the University of Washington, Tencent AI Lab, University of Pennsylvania, and Carnegie Mellon University. Llamaindex provides a LlamaPack to apply this technique. The original code in this [link](https://github.com/run-llama/llama-hub/tree/main/llama_hub/llama_packs/dense_x_retrieval)
@@ -53,6 +62,8 @@ In this case, chunk size settings are not used, in favor of following the window
 - multi-sub-queries-engine: in this notebook we show you how to use subqueries to improve RAG application.
 
 - sentence-window-retrieval: a sample notebook applying the sentence window retrieval and a reranker in the query engine.
+
+- auto-merging-retrieval: notebook implementing the auto merging retrieval approach.
 
 # License
 
