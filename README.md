@@ -51,6 +51,18 @@ In this notebook, we showcase our `AutoMergingRetriever`, which looks at a set o
 
 You can define this hierarchy yourself over a set of documents, or you can make use of our brand-new text parser: a `HierarchicalNodeParser` that takes in a candidate set of documents and outputs an entire hierarchy of nodes, from “coarse-to-fine”.
 
+### Query Pipelines
+LlamaIndex provides a declarative query API that allows you to chain together different modules in order to orchestrate simple-to-advanced workflows over your data.
+
+This is centered around our QueryPipeline abstraction. Load in a variety of modules (from LLMs to prompts to retrievers to other pipelines), connect them all together into a sequential chain or DAG, and run it end2end. At the core of all this is our QueryPipeline abstraction. It can take in many LlamaIndex modules (LLMs, prompts, query engines, retrievers, itself). It can create a computational graph over these modules (e.g. a sequential chain or a DAG). It has callback support and native support with our observability partners.
+
+So what are the advantages of QueryPipeline?
+
+- Express common workflows with fewer lines of code/boilerplate
+- Greater readability
+- Greater parity / better integration points with common low-code / no-code solutions (e.g. LangFlow)
+- [In the future] A declarative interface allows easy serializability of pipeline components, providing portability of pipelines/easier deployment to different systems.
+
 
 # Content
 
@@ -64,6 +76,8 @@ You can define this hierarchy yourself over a set of documents, or you can make 
 - sentence-window-retrieval: a sample notebook applying the sentence window retrieval and a reranker in the query engine.
 
 - auto-merging-retrieval: notebook implementing the auto merging retrieval approach.
+
+- query-pipelines: notebook with examples using query pipelines to build a sequential chain, Query Rewriting with Retrieval, RAG with/without Query Rewrite.
 
 # License
 
