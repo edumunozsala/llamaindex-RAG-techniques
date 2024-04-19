@@ -152,7 +152,7 @@ cython_debug/
 #.idea/
 
 # Data files
-data/
+#data/
 storage/
 # Output data
 output
