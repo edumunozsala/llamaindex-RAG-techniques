@@ -3,6 +3,16 @@
 
  #### This repository is still in progress. 
 
+ **Table of Content**
+ - [Dense X Retrieval](#dense-x-retrieval)
+ - [Hybrid Search and Reciprocal Rerank Fusion](#hybrid-search-and-reciprocal-rerank-fusion)
+ - [Sub Query Retriever Engine](#sub-query-retrieverengine-for-rag)
+ - [Sentence Window Retrieval](#sentence-window-retrieval)
+ - [Auto Merging Retrieval](#auto-merging-retrieval)
+ - [Query Pipelines](#query-pipelines)
+ - [Chain of Abstraction](#chain-of-abstraction)
+
+<a id="item-dense-retrieval"></a>
  ### Dense X Retrieval
 
  Paper: ["Dense X Retrieval: What Retrieval Granularity Should We Use?"](https://arxiv.org/abs/2312.06648) by Tong Chen, Hongwei Wang, Sihao Chen, Wenhao Yu, Kaixin Ma, Xinran Zhao, Hongming Zhang, and Dong Yu from the University of Washington, Tencent AI Lab, University of Pennsylvania, and Carnegie Mellon University.
@@ -18,6 +28,7 @@ In summary, the authors introduce the Propositionizer as a text generation model
 
 In conclusion, the study underscores the potential of proposition-based retrieval as a superior approach, offering improved performance in both retrieval tasks and downstream QA applications. The compact yet context-rich nature of propositions appears to be a valuable asset in addressing the challenges posed by limited token length in language models
 
+<a id="item-hybrid-search"></a>
 ### Hybrid Search and Reciprocal Rerank Fusion 
 
 A relatively old idea that you could take the best from both worlds — keyword-based old school search — sparse retrieval algorithms like tf-idf or search industry standard BM25 — and modern semantic or vector search and combine it in one retrieval result.
@@ -29,12 +40,14 @@ The retrieved documents will be reranked according to the `Reciprocal Rerank Fus
 
 Hybrid or fusion search usually provides better retrieval results as two complementary search algorithms are combined, taking into account both semantic similarity and keyword matching between the query and the stored documents.
 
+<a id="item-subquery-retrieval"></a>
 ### Sub Query RetrieverEngine for RAG 
 Query transformations are a family of techniques using an LLM as a reasoning engine to modify user input in order to improve retrieval quality.
 
 In this notebook, we showcase how to use a sub question query engine to tackle the problem of answering a complex query using multiple data sources.
 It first breaks down the complex query into sub questions for each relevant data source, then gather all the intermediate reponses and synthesizes a final response.
 
+<a id="item-sentence-retrieval"></a>
 ### Sentence Window Retrieval
 
 In this technique, we use the `SentenceWindowNodeParser` to parse documents into single sentences per node. Each node also contains a “window” with the sentences on either side of the node sentence. During retrieval, the similarity search is done over ther sentences then before passing the retrieved sentences to the LLM, the single sentences are replaced with a window containing the surrounding sentences using the `MetadataReplacementNodePostProcessor`.
@@ -43,6 +56,7 @@ This is most useful for large documents/indexes, as it helps to retrieve more fi
 
 In this case, chunk size settings are not used, in favor of following the window settings.
 
+<a id="item-auto-merging"></a>
 ### Auto Merging Retrieval
 The idea here is pretty much similar to Sentence Window Retriever — to search for more granular pieces of information and then to extend the context window before feeding said context to an LLM for reasoning. Documents are split into smaller child chunks referring to larger parent chunks.
 Fetch smaller chunks during retrieval first, then if more than n chunks in top k retrieved chunks are linked to the same parent node (larger chunk), we replace the context fed to the LLM by this parent node — works like auto merging a few retrieved chunks into a larger parent chunk, hence the method name.
@@ -51,6 +65,7 @@ In this notebook, we showcase our `AutoMergingRetriever`, which looks at a set o
 
 You can define this hierarchy yourself over a set of documents, or you can make use of our brand-new text parser: a `HierarchicalNodeParser` that takes in a candidate set of documents and outputs an entire hierarchy of nodes, from “coarse-to-fine”.
 
+<a id="item-query-pipelines"></a>
 ### Query Pipelines
 LlamaIndex provides a declarative query API that allows you to chain together different modules in order to orchestrate simple-to-advanced workflows over your data.
 
@@ -63,6 +78,14 @@ So what are the advantages of QueryPipeline?
 - Greater parity / better integration points with common low-code / no-code solutions (e.g. LangFlow)
 - [In the future] A declarative interface allows easy serializability of pipeline components, providing portability of pipelines/easier deployment to different systems.
 
+<a id="item-coa-llamapack"></a>
+### Chain of Abstraction
+
+Last February 2,024, to enhance Large Language Models (LLMs) with reasoning abilities, researchers from EPFL, FAIR and Meta have proposed a novel approach known as Chain-of-Abstraction (CoA). This method addresses the challenge of enabling LLMs to effectively utilize external knowledge sources in an efficient multistep reasoning process, by decoupling reasoning and the retrieval of granular knowledge.
+
+While tools aid LLMs in accessing external knowledge, fine-tuning LLM agents to adeptly invoke tools in multi-step reasoning poses challenges. Interconnected tool calls necessitate comprehensive and efficient tool usage planning. CoA presents a novel strategy for LLMs to optimize tool utilization in multi-step reasoning scenarios. The method involves training LLMs to initially decode reasoning chains using abstract placeholders. Subsequently, domain-specific tools are employed to concretize each reasoning chain by filling in specific knowledge.
+
+Planning with abstract chains enables LLMs to learn more generalized reasoning strategies. These strategies exhibit robustness to shifts in domain knowledge, such as mathematical results relevant to diverse reasoning questions. Furthermore, CoA facilitates parallel decoding and tool calling, mitigating inference delays associated with awaiting tool responses.
 
 # Content
 
@@ -78,6 +101,8 @@ So what are the advantages of QueryPipeline?
 - auto-merging-retrieval: notebook implementing the auto merging retrieval approach.
 
 - query-pipelines: notebook with examples using query pipelines to build a sequential chain, Query Rewriting with Retrieval, RAG with/without Query Rewrite.
+
+- chain-of-abstraction-llamapack: notebook using a CoA Llamapack agent to compare census data between Spain and the EU.
 
 # License
 
